@@ -1,0 +1,43 @@
+<html>
+<head>
+    <title>Check San Jose State Student's Attendance</title>    
+</head>
+<meta http-equiv="refresh" content="1" >
+{% load staticfiles %}
+<body background="../static/img/background_1.jpg" style="background-repeat:no-repeat;background-size:cover;">
+   <h1 style="text-align:center;"> Attendance of Student till {{date}} </h2>
+   <h3 style="text-align:left;">{{ class_info.0.1 }} | Professor Name : {{ class_info.0.2 }} | Class Strength: {{ class_info.0.3 }} | | Raspberry Pi Serial ID: {{ class_info.0.4 }}</h3>
+<h4 style="text-align:left;">Student Name : {{ student_info.0.1 }} | Student ID : {{ student_info.0.0 }} | Student IMEI Registered:  {{ student_info.0.3 }} </h4>
+
+
+<table style="width: 100%;border: 1px solid #000;">
+<tr>
+   <th style="text-align:center;">Student ID</th>
+   <th style="text-align:center;">Student Presence</th>
+   <th style="text-align:center;">Date</th>
+ </tr>
+{% for row in history %}
+<tr>
+
+    {% for value in row %}
+
+
+        <td style="text-align:center;">{{ value }}</td>
+
+    
+    {% endfor %}
+
+
+
+   
+</tr>
+{% endfor %}
+ </table>
+
+    
+
+
+
+    </body>
+
+</html>

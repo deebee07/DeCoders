@@ -1,0 +1,94 @@
+<html>
+<head>
+    <title>Class Attendance</title>    
+</head>
+<meta http-equiv="refresh" content="1" >
+{% load staticfiles %}
+<body background="../static/img/background_1.jpg" style="background-repeat:no-repeat;background-size:cover;">
+    <h1 style="text-align:center;"> Attendance of Class for {{date}} </h2>
+
+{% if sendBool %}
+
+
+   <h2 style="text-align:left;">CLASS INFORMATION: </h2>
+   <h3 style="text-align:left;">{{ class_tuple.0.1 }} | Professor Name : {{ class_tuple.0.2 }} | Class Strength: {{ class_tuple.0.3 }} | | Raspberry Pi Serial ID: {{ class_tuple.0.4 }}</h3>
+<h3>PRESENT STUDENTS</h3>
+
+<table style="width: 100%;border: 1px solid #000;">
+<tr>
+   <th>Student ID</th>
+   <th>Student Checkin Time</th>
+   <th>Student Checkout Time</th>
+   <th style="text-align:center;">Student Name</th>
+ </tr>
+{% for row in present_students %}
+<tr>
+	
+    {% for value in row %}
+        <td style="text-align:center;">{{ value }}</td>
+    {% endfor %}
+
+
+
+    {% for student in students%}
+   				{% if row.0 == student.0 %}
+   				<td style="text-align:center;">
+   				 {{student.1}}
+
+   				</td>
+         
+   				{% endif %}
+
+
+    {% endfor %}
+   
+</tr>
+{% endfor %}
+ </table>
+   
+<br>
+<br>
+<br>
+<br>
+<h3>ABSENT STUDENTS</h3>
+
+<table style="width: 100%;border: 1px solid #000;">
+<tr>
+   <th>Student ID</th>
+   <th>Student Checkin Time</th>
+   <th>Student Checkout Time</th>
+   <th style="text-align:center;">Student Name</th>
+ </tr>
+{% for row in absent_students %}
+<tr>
+	
+    {% for value in row %}
+        <td style="text-align:center;">{{ value }}</td>
+    {% endfor %}
+   
+   {% for student in students%}
+   				{% if row.0 == student.0 %}
+   				<td style="text-align:center;">
+   				 {{student.1}}
+
+   				</td>
+   				{% endif %}
+
+
+    {% endfor %}
+ 
+   
+   
+</tr>
+{% endfor %}
+ </table>
+{% else %}
+<h2 style="text-align:center;"> NO DATA OF STUDENTS IN THIS CLASS PRESENT IN DATABASE</h2>
+<h2 style="text-align:left;">CLASS INFORMATION: </h2>
+   <h3 style="text-align:left;">{{ class_tuple.0.1 }} | Professor Name : {{ class_tuple.0.2 }} | Class Strength: {{ class_tuple.0.3 }} | | Raspberry Pi Serial ID: {{ class_tuple.0.4 }}</h3>
+   {% endif %}
+
+    </body>
+
+
+</html>

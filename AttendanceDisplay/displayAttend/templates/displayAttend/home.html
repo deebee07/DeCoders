@@ -1,0 +1,57 @@
+{% extends "displayAttend/base.html" %}
+
+{% block content %}
+
+<h2 style="text-align:center;"> {{date}}</h2>
+    
+
+<h2>CHECK CLASS ATTENDANCE</h2>
+<table style="width: 100%;border: 1px solid #000;">
+<tr>
+   <th>Class ID</th>
+   <th>Class Name</th>
+   <th>Professor</th>
+   <th>Class Strength</th>
+   <th>Raspberry Serial Number</th>
+ </tr>
+
+{% for row in classes_list %}
+<tr>
+	
+    {% for value in row %}
+        <td style="text-align:center;">{{ value }}</td>
+    {% endfor %}
+    <td>
+
+  <a href="/attendance?class={{forloop.counter}}">Check Attendance</a> </td> 
+   
+</tr>
+{% endfor %}
+
+</table>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h2>CHECK ATTENDANCE BY STUDENT ID</h2>
+
+<form action="/studentattendance" method="get">
+<table style="width: 100%;border: 1px solid #000;">
+<tr style="text-align:center;">
+   <td > STUDENT ID</td>
+    <td><input type="text" name="studentID" id="studentID"></td>
+ </tr>
+    <tr style="text-align:center;">
+   <td >CLASS ID</td>
+    <td><input type="text" name="classID" id="classID"></td>
+ </tr>
+    
+    <tr style="text-align:center;">
+
+        <td colspan="2"><input type="submit" value="CHECK ATTENDANCE"></td>
+        </form>
+   <!--?studentID={{studentID}}&classID={{classID}}-->
+ </tr>
+{% endblock %}
