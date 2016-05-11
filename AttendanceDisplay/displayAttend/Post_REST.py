@@ -8,7 +8,7 @@ import json
 
 
 
-
+from django.utils import timezone
 
 '''
 SAMPLE JSON for postAttendance API
@@ -32,7 +32,7 @@ def markAttendance(request):
 		try:
 			table_name=cursor.fetchall()[0][0]
 		except IndexError:
-			return Response({'Detail': 'No such TableName in Database'})
+			return Response({'Detail': 'Get Token via Bluetooth'})
 		cursor.execute('SELECT * from classToken')
 		print cursor.fetchall()
 		cursor.execute('SELECT ImeiNum,studentId from studentMaster')
@@ -79,7 +79,7 @@ def checkoutStudent(request):
 		try:
 			table_name=cursor.fetchall()[0][0]
 		except IndexError:
-			return Response({'Detail': 'No such TableName in Database'})
+			return Response({'Detail': 'Get Token via Bluetooth'})
 		cursor.execute('SELECT * from classToken')
 		print cursor.fetchall()
 		cursor.execute('SELECT ImeiNum,studentId from studentMaster')
@@ -124,12 +124,19 @@ def registerStudent(request):
 		connection = sqlite3.connect('Attendance.db')
 		cursor=connection.cursor()
 		cursor.execute('UPDATE studentMaster set ImeiNum=? where studentId=?',(j['IMEINum'],studentId))
-		cursor.execute('SELECT ImeiNum from studentMaster where studentId = '+str(studentId))
-		try:
-			class_tuple=cursor.fetchall()[0][0]
-		except IndexError:
-			return Response({'Detail': 'No such Student in Database'})
-		connection.commit()
-		connection.close()
+		if cursor.rowcount == 1 :
+			connection.commit()
+			connection.close()
+			return Response({'Detail': 'Student Registered and IMEI Stored in DB'})	
+		else:
+			connection.commit()
+			connection.close()
+			return Response({'Detail': 'No Such Student ID or IMEI already registerd with another Student ID'})	
+#		cursor.execute('SELECT ImeiNum from studentMaster where studentId = '+str(studentId))
+#		try:
+#			class_tuple=cursor.fetchall()[0][0]
+#		except IndexError:
+#			return Response({'Detail': 'No such Student in Database'})
+#		connection.commit()
 		return Response({'Detail': 'IMEINum Stored in the Database of the student'})
-	raise Http404
+#	raise Http404
